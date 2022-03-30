@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginLeft="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_16dp" android:layout_marginRight="@dimen/dimen_16dp">
+        <ImageView android:id="@+id/imageView" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@mipmap/logo" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_weight="1.0">
+            <TextView android:textStyle="bold"
+                android:padding="@dimen/dimen_8dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+            <TextView android:gravity="left"
+                android:textSize="@dimen/text_12sp"
+                android:id="@+id/tv_version"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_8dp"
+                android:text="" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:autoLink="email" android:background="#f1efef"
+        android:layout_width="fill_parent" android:layout_height="1.0dip" android:layout_marginLeft="@dimen/dimen_16dp" android:layout_marginTop="@dimen/dimen_8dp" android:layout_marginRight="@dimen/dimen_16dp" android:layout_marginBottom="@dimen/dimen_8dp" android:text="Contact via" />
+    <TextView
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:textStyle="bold" android:textColor="@color/colorPrimary"
+        android:gravity="center" android:id="@+id/textView2" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Weezo News Team" />
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/dimen_5dp">
+        <ImageView
+            android:id="@+id/img_email"
+            android:alpha="0.5"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_5dp"
+            android:src="@drawable/ic_email_white_24dp" />
+        <TextView android:gravity="center" android:autoLink="email"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5dp" android:text="weezonews@gmail.com" />
+    </LinearLayout>
+</LinearLayout>

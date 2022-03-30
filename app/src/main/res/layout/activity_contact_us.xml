@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_margin="20dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_sp_app_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+android:layout_margin="20dp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:text="Contact US"
+            android:textStyle="bold"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:linksClickable="true"
+            android:layout_marginTop="30dp"
+            android:drawablePadding="@dimen/dimen_5dp"
+            android:drawableLeft="@drawable/ic_web"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:textColor="@android:color/white"
+            style="@style/tv_medium_text"
+            android:text="Web : https://www.himachalxpresstv.com/"
+            android:id="@+id/tv_web"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:linksClickable="true"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:drawablePadding="@dimen/dimen_5dp"
+            android:drawableLeft="@drawable/ic_email"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:textColor="@android:color/white"
+            style="@style/tv_medium_text"
+            android:text="Email : weezonews@gmail.com"
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:linksClickable="true"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:drawablePadding="@dimen/dimen_5dp"
+            android:drawableLeft="@drawable/ic_phone"
+            android:layout_marginLeft="@dimen/dimen_10dp"
+            android:textColor="@android:color/white"
+            style="@style/tv_medium_text"
+            android:text="Phone :+91 7827162141"
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Weezo</string>
+
+    <string name="banner_ads">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="full_ads">ca-app-pub-3940256099942544/1033173712</string>
+
+    <!--
+    <string name="banner_ads">ca-app-pub-2533401510636470/2577253800</string>
+    <string name="full_ads">ca-app-pub-2533401510636470/8454280911</string>
+    -->
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <string name="app_namefull">WeeZo News</string>
+    <string name="default_notification_channel_id">ShortPlay123</string>
+    <string name="src_name">Source : himachalxpresstv</string>
+    <string name="src_url">https://www.himachalxpresstv.com/</string>
+    <string name="read_more">पूरा पढ़ें</string>
+    <string name="shorts_hindi">शॉर्ट्स</string>
+    <string name="video_hindi">वीडियो</string>
+    <string name="title_rate">Rating app</string>
+    <string name="content_rate">If you enjoy using Weezo News, would you mind taking a moment to rate it?it won\'t take more than a minute. Thanks for your support!</string>
+    <string name="ask_me">Don\'t Ask Me Again</string>
+    <string name="remind_later">Remind Me Later</string>
+    <string name="msg_close_app">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="about_us">About Us</string>
+    <string name="rate_app">Rate 5 stars</string>
+    <string name="share_app">Invite friends</string>
+    <string name="feed_back">Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="version">Version</string>
+    <string name="rate">Rate</string>
+    <string name="share_mgs">Let me recommend you this application</string>
+    <string name="share_via">Share Via</string>
+    <string name="send_email">Send email...</string>
+    <string name="close">Close</string>
+    <string name="about">About us</string>
+    <string name="cancel">Cancel</string>
+    <string name="rating">Rating</string>
+    <string name="open">open</string>
+    <string name="rate_message">If you enjoy using Weezo News application, would you mind taking a moment to rate it?it won\'t take more than a minute. Thanks for your support!</string>
+</resources>
