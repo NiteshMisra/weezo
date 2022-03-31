@@ -4,6 +4,7 @@ package com.news.weezo.activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -84,6 +85,7 @@ class VideoNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        banner_layout_rl.visibility = View.GONE
         videoPlayerInterface.setListener(this)
         sw_refresh.setOnRefreshListener {
             getNewsVideo()
@@ -220,6 +222,12 @@ class VideoNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener,
         tv_media_title.setText(model.description)
         tv_total_likes.setText("" + Integer.parseInt(model.likes))
         tv_total_views.setText("" + Integer.parseInt(model.views))
+
+        if (model.is_liked.toInt() == 1) {
+            img_like.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorselected), PorterDuff.Mode.SRC_IN)
+        } else {
+            img_like.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorgray), PorterDuff.Mode.SRC_IN)
+        }
 
         var df: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:sss")
         val date: Date = df.parse(model.datetime)
@@ -436,6 +444,12 @@ class VideoNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener,
                 selectedModel!!.is_liked = islike.toString()
 
                 tv_total_likes.setText("" + Integer.parseInt(selectedModel!!.likes))
+
+                if (selectedModel!!.is_liked.toInt() == 1) {
+                    img_like.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorselected), PorterDuff.Mode.SRC_IN)
+                } else {
+                    img_like.setColorFilter(ContextCompat.getColor(context!!, R.color.colorgray), PorterDuff.Mode.SRC_IN)
+                }
                 // adapter.notifyItemChanged(position)
                 VolleyMethodsKotlin.getLikeVideo(
                     Constants.WEB_ACTION_LIKEVIDEO,

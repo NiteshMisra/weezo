@@ -2,17 +2,24 @@ package com.news.weezo.activity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.news.weezo.R
+import com.news.weezo.adapter.BannerAdapter
 import com.news.weezo.adapter.TextNewsAdapter
 import com.news.weezo.adapter.VideoAdapter
+import com.news.weezo.model.MediaFile
 import com.news.weezo.utils.PaginationScrollListener
 import com.news.weezo.utils.SpacesItemDecoration
 import com.news.weezo.webtask.ParseJson
@@ -22,6 +29,7 @@ import com.online.academic.utils.Constants
 import com.online.academic.utils.OnRecycleItemClick
 import com.online.academic.utils.Utils
 import kotlinx.android.synthetic.main.frg_video.*
+import java.lang.Exception
 
 class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
     private lateinit var adapter: TextNewsAdapter
@@ -29,6 +37,9 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
     var isLoadingData = false
     var isLastPageData = false
     var TOTAL_PAGES = 5
+
+    private var bannerList = ArrayList<MediaFile>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,6 +99,21 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
 
         getNewsVideo()
 
+        banner_view_pager.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrolled(
+                pos: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(pos: Int) {
+                bannerBottomDots(layout_dots, bannerList.size, pos % bannerList.size)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
+
     }
 
 
@@ -112,8 +138,35 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
             if (action.equals(Constants.WEB_ACTION_GET_VIDEO)) {
                 if (ParseJson.isSuccess(response)) {
                     activity?.runOnUiThread {
-                        var list = ParseJson.parseVideoList(response)
-                        adapter.list =  Utils.getNewsTypeList(list,Constants.TEXT_NEWS)
+                        val list = ParseJson.parseVideoList(response)
+                        val newsList =  ArrayList<MediaFile>()
+                        val completeNewsList = Utils.getNewsTypeList(list,Constants.TEXT_NEWS)
+                        if (page == 1){
+                            bannerList =  ArrayList()
+                            for ((i, item) in completeNewsList.withIndex()){
+                                if (i < 5){
+                                    bannerList.add(item)
+                                }else{
+                                    newsList.add(item)
+                                }
+                            }
+                        }else{
+                            newsList.addAll(completeNewsList)
+                        }
+                        adapter.list = newsList
+
+                        if (page == 1){
+                            val bannerAdapter = BannerAdapter(requireContext(), bannerList)
+                            banner_view_pager.adapter = bannerAdapter
+                            bannerAdapter.notifyDataSetChanged()
+
+                            bannerBottomDots(layout_dots, bannerList.size, 0)
+                        }
+
+                        if (newsList.size == 0){
+                            getNewsVideo()
+                        }
+
                     }
                 } else {
                     isLastPageData = true
@@ -200,6 +253,36 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
         // what to do with it.
         // share.putExtra(Intent.EXTRA_SUBJECT, "")
 
+    }
+
+    private fun bannerBottomDots(layout_dots: LinearLayout, size: Int, current: Int) {
+        val dots = arrayOfNulls<ImageView>(size)
+        layout_dots.removeAllViews()
+        try {
+            for (i in dots.indices) {
+                dots[i] = ImageView(activity)
+                val width_height = 17
+                val params =
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams(width_height, width_height))
+                params.setMargins(10, 0, 10, 0)
+                dots[i]!!.layoutParams = params
+                dots[i]!!.setImageResource(R.drawable.banner_dots)
+                dots[i]!!.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.bannerDotsColor),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+                layout_dots.addView(dots[i])
+            }
+            if (dots.size > 0) {
+                dots[current]!!.setImageResource(R.drawable.banner_dots)
+                dots[current]!!.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.bannerSelectedColor),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+            }
+        } catch (e: Exception) {
+            //to be handled later or to change dots layout
+        }
     }
 
 }

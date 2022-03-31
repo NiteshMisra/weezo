@@ -13,4 +13,8 @@
     <color name="black_status">#212122</color>
     <color name="black">#FF000000</color>
     <color name="backcolor">#F8F8F8</color>
+
+    <color name="bannerSelectedColor">#EA3223</color>
+    <color name="bannerDotsColor">#C6E6FF</color>
+
 </resources>
