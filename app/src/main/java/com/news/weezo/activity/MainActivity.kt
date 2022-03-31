@@ -190,6 +190,11 @@ class MainActivity : AppCompatActivity(), WebResponseListener, VideoPlayerInterf
             view_pager.currentItem = 1
         }
 
+        shorts_tv.setOnClickListener {
+            hamburgerClicked()
+            view_pager.currentItem = 0
+        }
+
         rate_us_tv.setOnClickListener {
             hamburgerClicked()
             try {

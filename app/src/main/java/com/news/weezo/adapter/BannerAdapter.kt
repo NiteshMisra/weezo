@@ -13,10 +13,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.news.weezo.R
 import com.news.weezo.model.MediaFile
 
-class BannerAdapter(
+abstract class BannerAdapter(
     private val context: Context,
     private val bannerList: List<MediaFile>
 ) : PagerAdapter() {
+
+    abstract fun onBannerClick(model : MediaFile)
 
     override fun getCount(): Int {
         return bannerList.size
@@ -38,6 +40,11 @@ class BannerAdapter(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(image)
         titleTv.text = currentItem.name
+
+        image.setOnClickListener {
+            onBannerClick(currentItem)
+        }
+
         container.addView(v)
         return v
     }

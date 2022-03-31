@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
     var TOTAL_PAGES = 5
 
     private var bannerList = ArrayList<MediaFile>()
+    private var bannerSliderCTimer : CountDownTimer ?= null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,6 +111,7 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
 
             override fun onPageSelected(pos: Int) {
                 bannerBottomDots(layout_dots, bannerList.size, pos % bannerList.size)
+                startSlider()
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
@@ -156,11 +159,17 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
                         adapter.list = newsList
 
                         if (page == 1){
-                            val bannerAdapter = BannerAdapter(requireContext(), bannerList)
+                            val bannerAdapter = object : BannerAdapter(requireContext(), bannerList){
+                                override fun onBannerClick(model: MediaFile) {
+                                    onNewsClick(model)
+                                }
+
+                            }
                             banner_view_pager.adapter = bannerAdapter
                             bannerAdapter.notifyDataSetChanged()
 
                             bannerBottomDots(layout_dots, bannerList.size, 0)
+                            startSlider()
                         }
 
                         if (newsList.size == 0){
@@ -212,11 +221,7 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
             i.data = Uri.parse(url)
             startActivity(i)
         } else if(view.id == R.id.tv_click_toread_more){
-            MainActivity.countNumberAds ++;
-            VolleyMethodsKotlin.updateVideoView(Constants.WEB_ACTION_VIEWVIDEO, model.id, this)
-            var intent = Intent(activity!!,TextNewsDetailsActivity::class.java)
-            intent.putExtra("data",model)
-            startActivity(intent)
+            onNewsClick(model)
         }
 
         else {
@@ -224,6 +229,15 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
         }
 
     }
+
+    private fun onNewsClick(model : MediaFile){
+        MainActivity.countNumberAds ++;
+        VolleyMethodsKotlin.updateVideoView(Constants.WEB_ACTION_VIEWVIDEO, model.id, this)
+        var intent = Intent(activity!!,TextNewsDetailsActivity::class.java)
+        intent.putExtra("data",model)
+        startActivity(intent)
+    }
+
     private fun navigateToVideoPlayer(position: Int) {
         var mediaFile=  adapter.list.get(position)
         mediaFile.views=""+(mediaFile.views.toInt()+1)
@@ -283,6 +297,28 @@ class TextNewsFragment : Fragment(), OnRecycleItemClick, WebResponseListener {
         } catch (e: Exception) {
             //to be handled later or to change dots layout
         }
+    }
+
+    private fun startSlider() {
+        bannerSliderCTimer?.cancel()
+        bannerSliderCTimer = object : CountDownTimer(5000, 1000) {
+            override fun onTick(l: Long) {}
+            override fun onFinish() {
+                if (bannerList.size > 0) {
+                    val currentPosition: Int = banner_view_pager.currentItem
+                    if (currentPosition == bannerList.size - 1) {
+                        banner_view_pager.currentItem = 0
+                    } else {
+                        banner_view_pager.currentItem = currentPosition + 1
+                    }
+                }
+            }
+        }.start()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bannerSliderCTimer?.cancel()
     }
 
 }

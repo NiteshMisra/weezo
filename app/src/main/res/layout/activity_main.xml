@@ -151,13 +151,29 @@
                 android:layout_marginEnd="15dp"/>
 
             <TextView
+                android:id="@+id/shorts_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:text="Shorts"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorgray"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"/>
+
+            <TextView
                 android:id="@+id/video_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
                 android:textSize="14sp"
                 android:textColor="@color/black"
-                android:text="Shorts and Video"/>
+                android:text="Video"/>
 
             <View
                 android:layout_width="match_parent"
