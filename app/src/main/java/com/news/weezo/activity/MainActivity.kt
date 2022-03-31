@@ -1,7 +1,9 @@
 package com.news.weezo.activity
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -19,6 +21,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 import com.google.firebase.iid.FirebaseInstanceId
+import com.news.weezo.BuildConfig
 import com.news.weezo.MainApplication
 import com.news.weezo.R
 import com.news.weezo.adapter.MyPagerAdapter
@@ -35,7 +38,6 @@ import com.news.weezo.webtask.WebResponseListener
 import com.online.academic.utils.Constants
 import com.online.academic.utils.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.img_share
 import kotlinx.android.synthetic.main.row_text_news.*
 import java.util.*
 
@@ -127,18 +129,18 @@ class MainActivity : AppCompatActivity(), WebResponseListener, VideoPlayerInterf
         if (intent.hasExtra("type")) {
             type = intent.getStringExtra("type")!!
         }
-        img_contact_us.visibility = View.GONE
-        img_contact_us.setOnClickListener {
-            startActivity(Intent(this, ContactUSPage::class.java))
-        }
-        img_share.setOnClickListener {
-            var str =
-                "Download WeeZo android app to get latest local news very first form below link :\n" + Constants.URL_APP_STORE
-            shareVideo(str)
-        }
-        img_about.setOnClickListener {
-            startActivity(Intent(this, AboutUsActivity::class.java))
-        }
+//        img_contact_us.visibility = View.GONE
+//        img_contact_us.setOnClickListener {
+//            startActivity(Intent(this, ContactUSPage::class.java))
+//        }
+//        img_share.setOnClickListener {
+//            var str =
+//                "Download WeeZo android app to get latest local news very first form below link :\n" + Constants.URL_APP_STORE
+//            shareVideo(str)
+//        }
+//        img_about.setOnClickListener {
+//            startActivity(Intent(this, AboutUsActivity::class.java))
+//        }
 
         getFirebaseInstanceId()
 
@@ -178,6 +180,39 @@ class MainActivity : AppCompatActivity(), WebResponseListener, VideoPlayerInterf
         }
 
         hamburger_icon_iv.setOnClickListener { hamburgerClicked() }
+
+        navClickHandle()
+    }
+
+    private fun navClickHandle() {
+        video_tv.setOnClickListener {
+            hamburgerClicked()
+            view_pager.currentItem = 1
+        }
+
+        rate_us_tv.setOnClickListener {
+            hamburgerClicked()
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")))
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")))
+            }
+        }
+
+        share_tv.setOnClickListener {
+            hamburgerClicked()
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT,
+                "Download WeeZo android app to get latest local news very first form below link :\n${BuildConfig.APPLICATION_ID}"
+            )
+            startActivity(Intent.createChooser(intent, title))
+        }
+
+        about_us_tv.setOnClickListener {
+            hamburgerClicked()
+            startActivity(Intent(this,AboutUsActivity::class.java))
+        }
     }
 
 
